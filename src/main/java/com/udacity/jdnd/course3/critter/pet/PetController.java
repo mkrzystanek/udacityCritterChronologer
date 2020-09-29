@@ -20,34 +20,31 @@ import java.util.stream.StreamSupport;
 @RequestMapping("/pet")
 public class PetController {
 
-//    @Autowired
-//    PetRepository petRepository;
-//    @Autowired
-//    CustomerRepository customerRepository;
+    @Autowired
+    PetRepository petRepository;
+    @Autowired
+    CustomerRepository customerRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-//        petRepository.save(convertPetDTO(petDTO));
-//        return petDTO;
-        throw new UnsupportedOperationException();
+        petRepository.save(convertPetDTO(petDTO));
+        return petDTO;
     }
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-//        PetEntity pet = petRepository.findById(petId)
-//                .orElseThrow(() -> new RuntimeException("Failed to find pet with id = " + petId));
-//        return convertPetEntity(pet);
-        throw new UnsupportedOperationException();
+        PetEntity pet = petRepository.findById(petId)
+                .orElseThrow(() -> new RuntimeException("Failed to find pet with id = " + petId));
+        return convertPetEntity(pet);
     }
 
     @GetMapping
     public List<PetDTO> getPets(){
-//        return StreamSupport
-//                .stream(petRepository.findAll().spliterator(), false)
-//                .map(this::convertPetEntity)
-//                .collect(Collectors.toList());
-        throw new UnsupportedOperationException();
+        return StreamSupport
+                .stream(petRepository.findAll().spliterator(), false)
+                .map(this::convertPetEntity)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/owner/{ownerId}")
@@ -55,20 +52,20 @@ public class PetController {
         throw new UnsupportedOperationException();
     }
 
-//    public PetDTO convertPetEntity(PetEntity petEntity) {
-//        PetDTO petDTO = new PetDTO();
-//        BeanUtils.copyProperties(petEntity, petDTO);
-//        petDTO.setOwnerId(petEntity.getOwner().getId());
-//        return petDTO;
-//    }
+    public PetDTO convertPetEntity(PetEntity petEntity) {
+        PetDTO petDTO = new PetDTO();
+        BeanUtils.copyProperties(petEntity, petDTO);
+        petDTO.setOwnerId(petEntity.getOwner().getId());
+        return petDTO;
+    }
 
-//    public PetEntity convertPetDTO(PetDTO petDTO) {
-//        PetEntity petEntity = new PetEntity();
-//        BeanUtils.copyProperties(petDTO, petEntity);
-//        CustomerEntity customer = customerRepository
-//                .findById(petDTO.getOwnerId())
-//                .orElseThrow(() -> new RuntimeException("Failed to find owner of id: " + petDTO.getOwnerId()));
-//        petEntity.setOwner(customer);
-//        return petEntity;
-//    }
+    public PetEntity convertPetDTO(PetDTO petDTO) {
+        PetEntity petEntity = new PetEntity();
+        BeanUtils.copyProperties(petDTO, petEntity);
+        CustomerEntity customer = customerRepository
+                .findById(petDTO.getOwnerId())
+                .orElseThrow(() -> new RuntimeException("Failed to find owner of id: " + petDTO.getOwnerId()));
+        petEntity.setOwner(customer);
+        return petEntity;
+    }
 }
