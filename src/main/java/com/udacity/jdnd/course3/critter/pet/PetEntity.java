@@ -1,6 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
-import com.udacity.jdnd.course3.critter.user.CustomerEntity;
+import com.udacity.jdnd.course3.critter.user.customer.CustomerEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -1,6 +1,7 @@
-package com.udacity.jdnd.course3.critter.user;
+package com.udacity.jdnd.course3.critter.user.customer;
 
 import com.udacity.jdnd.course3.critter.pet.PetEntity;
+import com.udacity.jdnd.course3.critter.user.UserEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;

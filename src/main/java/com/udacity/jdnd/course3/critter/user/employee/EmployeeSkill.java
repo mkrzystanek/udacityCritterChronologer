@@ -1,6 +1,4 @@
-package com.udacity.jdnd.course3.critter.user;
-
-import javax.persistence.Embeddable;
+package com.udacity.jdnd.course3.critter.user.employee;
 
 /**
  * A example list of employee skills that could be included on an employee or a schedule request.

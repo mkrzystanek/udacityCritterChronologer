@@ -1,14 +1,5 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
-import com.udacity.jdnd.course3.critter.pet.PetEntity;
-import com.udacity.jdnd.course3.critter.user.EmployeeEntity;
-import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
-
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
-
 //@Entity
 public class ScheduleEntity {
 
