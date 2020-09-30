@@ -25,7 +25,7 @@ public class CustomerEntity extends UserEntity {
         this.pets = pets;
     }
 
-    public CustomerEntity(Integer id, String name, String phoneNumber, String notes, Set<PetEntity> pets) {
+    public CustomerEntity(Long id, String name, String phoneNumber, String notes, Set<PetEntity> pets) {
         super(id, name);
         this.phoneNumber = phoneNumber;
         this.notes = notes;

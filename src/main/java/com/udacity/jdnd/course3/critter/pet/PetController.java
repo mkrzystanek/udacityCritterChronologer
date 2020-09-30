@@ -26,8 +26,8 @@ public class PetController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-        petRepository.save(convertPetDTO(petDTO));
-        return petDTO;
+        PetEntity petEntity = petRepository.save(convertPetDTO(petDTO));
+        return convertPetEntity(petEntity);
     }
 
     @GetMapping("/{petId}")
@@ -53,17 +53,18 @@ public class PetController {
     public PetDTO convertPetEntity(PetEntity petEntity) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(petEntity, petDTO);
-        petDTO.setOwnerId(petEntity.getOwner().getId());
+        if (petEntity.getOwner() != null) {
+            petDTO.setOwnerId(petEntity.getOwner().getId());
+        }
         return petDTO;
     }
 
     public PetEntity convertPetDTO(PetDTO petDTO) {
         PetEntity petEntity = new PetEntity();
         BeanUtils.copyProperties(petDTO, petEntity);
-        CustomerEntity customer = customerRepository
-                .findById(petDTO.getOwnerId())
-                .orElseThrow(() -> new RuntimeException("Failed to find owner of id: " + petDTO.getOwnerId()));
-        petEntity.setOwner(customer);
+        if (petDTO.getOwnerId() != null) {
+
+        }
         return petEntity;
     }
 }

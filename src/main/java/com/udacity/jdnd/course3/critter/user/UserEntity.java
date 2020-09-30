@@ -9,23 +9,23 @@ public class UserEntity {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String name;
 
     public UserEntity() {
     }
 
-    public UserEntity(Integer id, String name) {
+    public UserEntity(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

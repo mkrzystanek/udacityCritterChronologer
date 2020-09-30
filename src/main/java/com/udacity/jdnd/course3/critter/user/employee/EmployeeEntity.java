@@ -29,7 +29,7 @@ public class EmployeeEntity extends UserEntity {
         this.daysAvailable = daysAvailable;
     }
 
-    public EmployeeEntity(Integer id, String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable) {
+    public EmployeeEntity(Long id, String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable) {
         super(id, name);
         this.skills = skills;
         this.daysAvailable = daysAvailable;
