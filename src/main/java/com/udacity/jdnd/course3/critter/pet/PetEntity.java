@@ -13,6 +13,7 @@ public class PetEntity {
     @GeneratedValue
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     private PetType type;
     private String name;
     @ManyToOne
