@@ -11,7 +11,7 @@ public class PetEntity {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private PetType type;
@@ -24,7 +24,7 @@ public class PetEntity {
     public PetEntity() {
     }
 
-    public PetEntity(Integer id, PetType type, String name, CustomerEntity owner, LocalDate birthDate, String notes) {
+    public PetEntity(Long id, PetType type, String name, CustomerEntity owner, LocalDate birthDate, String notes) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -33,11 +33,11 @@ public class PetEntity {
         this.notes = notes;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
