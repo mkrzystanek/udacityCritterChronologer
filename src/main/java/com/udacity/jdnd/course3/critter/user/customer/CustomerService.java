@@ -22,4 +22,13 @@ public class CustomerService {
                 .stream(customerRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
+
+    public CustomerEntity getCustomer(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Failed to find customer with id: " + id));
+    }
+
+    public boolean customerExists(Long id) {
+        return customerRepository.existsById(id);
+    }
 }
