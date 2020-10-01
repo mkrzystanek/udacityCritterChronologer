@@ -85,6 +85,9 @@ public class UserController {
     private CustomerEntity convertCustomerDTOToCustomerEntity(CustomerDTO customerDTO) {
         CustomerEntity customerEntity = new CustomerEntity();
         BeanUtils.copyProperties(customerDTO, customerEntity);
+        if (!customerDTO.getPetIds().isEmpty()) {
+            
+        }
         return customerEntity;
     }
 

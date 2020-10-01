@@ -27,4 +27,8 @@ public class PetService {
                 .stream(petRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
+
+    public List<PetEntity> getPetsByOwner(Long ownerId) {
+        return petRepository.findAllByOwnerId(ownerId);
+    }
 }
