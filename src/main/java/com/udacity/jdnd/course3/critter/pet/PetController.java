@@ -19,30 +19,24 @@ import java.util.stream.StreamSupport;
 public class PetController {
 
     @Autowired
-    PetRepository petRepository;
-    @Autowired
-    CustomerRepository customerRepository;
+    PetService petService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-        PetEntity petEntity = petRepository.save(convertPetDTO(petDTO));
-        return convertPetEntity(petEntity);
+        return convertPetEntity(petService.savePet(convertPetDTO(petDTO)));
     }
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        PetEntity pet = petRepository.findById(petId)
-                .orElseThrow(() -> new RuntimeException("Failed to find pet with id = " + petId));
-        return convertPetEntity(pet);
+        return convertPetEntity(petService.getPet(petId));
     }
 
     @GetMapping
     public List<PetDTO> getPets(){
-        return StreamSupport
-                .stream(petRepository.findAll().spliterator(), false)
-                .map(this::convertPetEntity)
-                .collect(Collectors.toList());
+        return petService.getAllPets()
+                .stream()
+                .map(this::convertPetEntity).collect(Collectors.toList());
     }
 
     @GetMapping("/owner/{ownerId}")
@@ -53,18 +47,12 @@ public class PetController {
     public PetDTO convertPetEntity(PetEntity petEntity) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(petEntity, petDTO);
-        if (petEntity.getOwner() != null) {
-            petDTO.setOwnerId(petEntity.getOwner().getId());
-        }
         return petDTO;
     }
 
     public PetEntity convertPetDTO(PetDTO petDTO) {
         PetEntity petEntity = new PetEntity();
         BeanUtils.copyProperties(petDTO, petEntity);
-        if (petDTO.getOwnerId() != null) {
-
-        }
         return petEntity;
     }
 }

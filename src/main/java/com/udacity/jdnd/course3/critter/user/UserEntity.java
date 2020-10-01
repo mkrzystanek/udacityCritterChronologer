@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+// I have chosen to stick to default inheritance strategy (SINGLE_TABLE) because it provides quick and easy access to
+// data. Because this is a practice project, I don't need to save data base space. There isn't any need for not null
+// fields in my Entities.
 public class UserEntity {
 
     @Id
