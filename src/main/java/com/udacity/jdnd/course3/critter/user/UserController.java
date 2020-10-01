@@ -1,5 +1,8 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.pet.PetEntity;
+import com.udacity.jdnd.course3.critter.pet.PetRepository;
+import com.udacity.jdnd.course3.critter.pet.PetService;
 import com.udacity.jdnd.course3.critter.user.customer.CustomerDTO;
 import com.udacity.jdnd.course3.critter.user.customer.CustomerEntity;
 import com.udacity.jdnd.course3.critter.user.customer.CustomerService;
@@ -9,11 +12,11 @@ import com.udacity.jdnd.course3.critter.user.employee.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -31,6 +34,9 @@ public class UserController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    PetService petService;
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
@@ -85,15 +91,36 @@ public class UserController {
     private CustomerEntity convertCustomerDTOToCustomerEntity(CustomerDTO customerDTO) {
         CustomerEntity customerEntity = new CustomerEntity();
         BeanUtils.copyProperties(customerDTO, customerEntity);
-        if (!customerDTO.getPetIds().isEmpty()) {
-            
+
+        if (!CollectionUtils.isEmpty(customerDTO.getPetIds())) {
+            Set<PetEntity> petEntities = customerDTO.getPetIds()
+                    .stream()
+                    .map(id -> {
+                        if (petService.petExists(id)) {
+                            return petService.getPet(id);
+                        } else {
+                            return null;
+                        }
+                    }).filter(Objects::nonNull)
+                    .collect(Collectors.toSet());
+            customerEntity.setPets(petEntities);
         }
+
         return customerEntity;
     }
 
     private CustomerDTO convertCustomerEntityToCustomerDTO(CustomerEntity customerEntity) {
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customerEntity, customerDTO);
+
+        if (!CollectionUtils.isEmpty(customerEntity.getPets())) {
+            List<Long> petIds = customerEntity.getPets()
+                    .stream()
+                    .map(PetEntity::getId)
+                    .collect(Collectors.toList());
+            customerDTO.setPetIds(petIds);
+        }
+
         return customerDTO;
     }
 }

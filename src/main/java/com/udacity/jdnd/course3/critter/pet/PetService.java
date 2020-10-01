@@ -31,4 +31,8 @@ public class PetService {
     public List<PetEntity> getPetsByOwner(Long ownerId) {
         return petRepository.findAllByOwnerId(ownerId);
     }
+
+    public boolean petExists(Long id) {
+        return petRepository.existsById(id);
+    }
 }

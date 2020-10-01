@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.user.customer;
 import com.udacity.jdnd.course3.critter.pet.PetEntity;
 import com.udacity.jdnd.course3.critter.user.UserEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.Set;
@@ -13,7 +14,7 @@ public class CustomerEntity extends UserEntity {
     private String phoneNumber;
     private String notes;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private Set<PetEntity> pets;
 
     public CustomerEntity() {
