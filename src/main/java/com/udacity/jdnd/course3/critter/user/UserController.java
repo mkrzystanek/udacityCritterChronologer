@@ -9,6 +9,7 @@ import com.udacity.jdnd.course3.critter.user.employee.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeEntity;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeService;
+import com.udacity.jdnd.course3.critter.utils.DTOConverterUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,13 +40,16 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
     @Autowired
-    PetService petService;
+    private PetService petService;
+
+    @Autowired
+    private DTOConverterUtils dtoConverterUtils;
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
@@ -102,17 +108,9 @@ public class UserController {
         BeanUtils.copyProperties(customerDTO, customerEntity);
 
         if (!CollectionUtils.isEmpty(customerDTO.getPetIds())) {
-            Set<PetEntity> petEntities = customerDTO.getPetIds()
-                    .stream()
-                    .map(id -> {
-                        if (petService.petExists(id)) {
-                            return petService.getPet(id);
-                        } else {
-                            return null;
-                        }
-                    }).filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
-            customerEntity.setPets(petEntities);
+            Collection<PetEntity> petEntities = dtoConverterUtils
+                    .convertIdListToEntityCollection(customerDTO.getPetIds(), (id) -> petService.getPet(id));
+            customerEntity.setPets(new HashSet<>(petEntities));
         }
 
         return customerEntity;
@@ -123,11 +121,8 @@ public class UserController {
         BeanUtils.copyProperties(customerEntity, customerDTO);
 
         if (!CollectionUtils.isEmpty(customerEntity.getPets())) {
-            List<Long> petIds = customerEntity.getPets()
-                    .stream()
-                    .map(PetEntity::getId)
-                    .collect(Collectors.toList());
-            customerDTO.setPetIds(petIds);
+            Collection<Long> petIds = dtoConverterUtils.convertEntitiesToIdList(customerEntity.getPets());
+            customerDTO.setPetIds(new ArrayList<>(petIds));
         }
 
         return customerDTO;

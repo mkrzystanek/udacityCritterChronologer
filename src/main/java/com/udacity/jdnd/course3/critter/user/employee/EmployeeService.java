@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class EmployeeService {
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     public EmployeeEntity saveEmployee(EmployeeEntity employeeEntity) {
         return employeeRepository.save(employeeEntity);

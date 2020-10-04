@@ -1,5 +1,7 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.EntityInterface;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,7 +10,7 @@ import javax.persistence.Id;
 // I have chosen to stick to default inheritance strategy (SINGLE_TABLE) because it provides quick and easy access to
 // data. Because this is a practice project, I don't need to save data base space. There isn't any need for not null
 // fields in my Entities.
-public class UserEntity {
+public class UserEntity implements EntityInterface {
 
     @Id
     @GeneratedValue

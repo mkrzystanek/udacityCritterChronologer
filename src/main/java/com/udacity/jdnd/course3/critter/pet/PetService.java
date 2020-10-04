@@ -11,7 +11,7 @@ import java.util.stream.StreamSupport;
 public class PetService {
 
     @Autowired
-    PetRepository petRepository;
+    private PetRepository petRepository;
 
     public PetEntity savePet(PetEntity petEntity) {
         return petRepository.save(petEntity);

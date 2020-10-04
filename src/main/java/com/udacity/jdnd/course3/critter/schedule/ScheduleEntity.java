@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
+import com.udacity.jdnd.course3.critter.EntityInterface;
 import com.udacity.jdnd.course3.critter.pet.PetEntity;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeEntity;
 import com.udacity.jdnd.course3.critter.user.employee.EmployeeSkill;
@@ -15,11 +16,11 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-public class ScheduleEntity {
+public class ScheduleEntity implements EntityInterface {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     @ManyToMany
     @JoinTable
@@ -35,7 +36,7 @@ public class ScheduleEntity {
     @JoinTable(name = "schedule_activities")
     private Set<EmployeeSkill> activities;
 
-    public ScheduleEntity(Integer id, List<EmployeeEntity> employees, List<PetEntity> pets, LocalDate date, Set<EmployeeSkill> activities) {
+    public ScheduleEntity(Long id, List<EmployeeEntity> employees, List<PetEntity> pets, LocalDate date, Set<EmployeeSkill> activities) {
         this.id = id;
         this.employees = employees;
         this.pets = pets;
@@ -46,11 +47,11 @@ public class ScheduleEntity {
     public ScheduleEntity() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

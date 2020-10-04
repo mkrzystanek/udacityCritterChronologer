@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.EntityInterface;
 import com.udacity.jdnd.course3.critter.user.customer.CustomerEntity;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "pet")
-public class PetEntity {
+public class PetEntity implements EntityInterface {
 
     @Id
     @GeneratedValue

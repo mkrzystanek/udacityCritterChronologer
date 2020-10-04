@@ -12,7 +12,7 @@ import java.util.stream.StreamSupport;
 public class CustomerService {
 
     @Autowired
-    CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     public CustomerEntity saveCustomer(CustomerEntity customerEntity) {
         return customerRepository.save(customerEntity);
