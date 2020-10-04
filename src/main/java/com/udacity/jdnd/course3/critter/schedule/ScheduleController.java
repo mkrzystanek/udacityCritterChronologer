@@ -46,7 +46,9 @@ public class ScheduleController {
 
     @GetMapping
     public List<ScheduleDTO> getAllSchedules() {
-        throw new UnsupportedOperationException();
+        return scheduleService.getAllSchedules().stream()
+                .map(this::convertScheduleEntityToScheduleDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/pet/{petId}")
