@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Handles web requests related to Schedules.
@@ -50,17 +51,23 @@ public class ScheduleController {
 
     @GetMapping("/pet/{petId}")
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        return scheduleService.getScheduleForPet(petId).stream()
+                .map(this::convertScheduleEntityToScheduleDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/employee/{employeeId}")
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return scheduleService.getScheduleForEmployee(employeeId).stream()
+                .map(this::convertScheduleEntityToScheduleDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/customer/{customerId}")
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
-        throw new UnsupportedOperationException();
+        return scheduleService.getScheduleForCustomer(customerId).stream()
+                .map(this::convertScheduleEntityToScheduleDTO)
+                .collect(Collectors.toList());
     }
 
     private ScheduleDTO convertScheduleEntityToScheduleDTO(ScheduleEntity scheduleEntity) {
