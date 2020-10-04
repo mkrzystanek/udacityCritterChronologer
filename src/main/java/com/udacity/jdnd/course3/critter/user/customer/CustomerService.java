@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.user.customer;
 
+import com.udacity.jdnd.course3.critter.pet.PetEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,12 @@ public class CustomerService {
 
     public boolean customerExists(Long id) {
         return customerRepository.existsById(id);
+    }
+
+    public void addPet(PetEntity petEntity) {
+        CustomerEntity customerEntity = customerRepository.findById(petEntity.getOwner().getId())
+                .orElseThrow(() -> new RuntimeException("Failed to find customer!"));
+        customerEntity.addPet(petEntity);
+        customerRepository.save(customerEntity);
     }
 }

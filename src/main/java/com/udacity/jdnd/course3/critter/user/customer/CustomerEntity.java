@@ -6,6 +6,7 @@ import com.udacity.jdnd.course3.critter.user.UserEntity;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,8 +15,8 @@ public class CustomerEntity extends UserEntity {
     private String phoneNumber;
     private String notes;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private Set<PetEntity> pets;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PetEntity> pets = new HashSet<>();
 
     public CustomerEntity() {
     }
@@ -31,6 +32,17 @@ public class CustomerEntity extends UserEntity {
         this.phoneNumber = phoneNumber;
         this.notes = notes;
         this.pets = pets;
+    }
+
+
+    public void addPet(PetEntity petEntity) {
+        pets.add(petEntity);
+        petEntity.setOwner(this);
+    }
+
+    public void removePet(PetEntity petEntity) {
+        pets.remove(petEntity);
+        petEntity.setOwner(null);
     }
 
     public String getPhoneNumber() {

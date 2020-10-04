@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.user.customer.CustomerEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "pet")
@@ -16,7 +17,7 @@ public class PetEntity {
     @Enumerated(EnumType.STRING)
     private PetType type;
     private String name;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CustomerEntity owner;
     private LocalDate birthDate;
     private String notes;
@@ -79,5 +80,18 @@ public class PetEntity {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PetEntity petEntity = (PetEntity) o;
+        return Objects.equals(id, petEntity.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

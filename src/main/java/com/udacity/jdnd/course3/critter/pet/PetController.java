@@ -25,7 +25,10 @@ public class PetController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-        return convertPetEntityToPetDTO(petService.savePet(convertPetDTOToPetEntity(petDTO)));
+        PetEntity petEntity = petService.savePet(convertPetDTOToPetEntity(petDTO));
+        PetDTO savedPet = convertPetEntityToPetDTO(petEntity);
+        customerService.addPet(petEntity);
+        return savedPet;
     }
 
     @GetMapping("/{petId}")
