@@ -39,4 +39,8 @@ public class CustomerService {
         customerEntity.addPet(petEntity);
         customerRepository.save(customerEntity);
     }
+
+    public CustomerEntity getCustomerByPet(Long petId) {
+        return customerRepository.findByPetsId(petId);
+    }
 }

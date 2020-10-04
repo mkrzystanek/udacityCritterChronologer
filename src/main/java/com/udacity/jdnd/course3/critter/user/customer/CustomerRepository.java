@@ -8,4 +8,5 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface CustomerRepository extends CrudRepository<CustomerEntity, Long> {
+    CustomerEntity findByPetsId(Long petId);
 }
