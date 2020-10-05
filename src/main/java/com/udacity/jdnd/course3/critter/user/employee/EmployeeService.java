@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.user.employee;
 
+import com.udacity.jdnd.course3.critter.CritterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class EmployeeService {
 
     public EmployeeEntity getEmployee(Long id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Failed to find employee with id: " + id));
+                .orElseThrow(() -> new CritterException("Failed to find employee with id: " + id));
     }
 
     public void setAvailability(Set<DayOfWeek> daysAvailable, Long employeeId) {

@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.CritterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class PetService {
 
     public PetEntity getPet(Long id) {
         return petRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Failed to find pet with id: " + id));
+                .orElseThrow(() -> new CritterException("Failed to find pet with id: " + id));
     }
 
     public List<PetEntity> getAllPets() {
