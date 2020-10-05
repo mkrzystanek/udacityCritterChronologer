@@ -27,7 +27,9 @@ public class PetController {
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
         PetEntity petEntity = petService.savePet(convertPetDTOToPetEntity(petDTO));
         PetDTO savedPet = convertPetEntityToPetDTO(petEntity);
-        customerService.addPet(petEntity);
+        if (petDTO.getOwnerId() != null) {
+            customerService.addPet(petEntity);
+        }
         return savedPet;
     }
 
@@ -63,7 +65,7 @@ public class PetController {
     public PetEntity convertPetDTOToPetEntity(PetDTO petDTO) {
         PetEntity petEntity = new PetEntity();
         BeanUtils.copyProperties(petDTO, petEntity);
-        if (customerService.customerExists(petDTO.getOwnerId())) {
+        if (petDTO.getOwnerId() != null && customerService.customerExists(petDTO.getOwnerId())) {
             petEntity.setOwner(customerService.getCustomer(petDTO.getOwnerId()));
         }
         return petEntity;

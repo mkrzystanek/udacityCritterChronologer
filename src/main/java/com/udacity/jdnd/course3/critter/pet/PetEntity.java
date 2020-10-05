@@ -3,9 +3,15 @@ package com.udacity.jdnd.course3.critter.pet;
 import com.udacity.jdnd.course3.critter.EntityInterface;
 import com.udacity.jdnd.course3.critter.user.customer.CustomerEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Table(name = "pet")
@@ -81,18 +87,5 @@ public class PetEntity implements EntityInterface {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PetEntity petEntity = (PetEntity) o;
-        return Objects.equals(id, petEntity.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

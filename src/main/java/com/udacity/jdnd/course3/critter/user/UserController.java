@@ -53,7 +53,15 @@ public class UserController {
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-        return convertCustomerEntityToCustomerDTO(customerService.saveCustomer(convertCustomerDTOToCustomerEntity(customerDTO)));
+        CustomerEntity customerEntity = convertCustomerDTOToCustomerEntity(customerDTO);
+        CustomerDTO savedCustomerDTO =  convertCustomerEntityToCustomerDTO(customerService.saveCustomer(customerEntity));
+        if (!CollectionUtils.isEmpty(customerDTO.getPetIds())) {
+            customerDTO.getPetIds().stream().map(id -> petService.getPet(id)).forEach(pet -> {
+                pet.setOwner(customerEntity);
+                petService.savePet(pet);
+            });
+        }
+        return savedCustomerDTO;
     }
 
     @GetMapping("/customer")

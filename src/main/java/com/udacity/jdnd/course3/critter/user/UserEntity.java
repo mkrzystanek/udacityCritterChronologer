@@ -4,16 +4,19 @@ import com.udacity.jdnd.course3.critter.EntityInterface;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
-// I have chosen to stick to default inheritance strategy (SINGLE_TABLE) because it provides quick and easy access to
-// data. Because this is a practice project, I don't need to save data base space. There isn't any need for not null
-// fields in my Entities.
+// I have chosen a "TABLE_PER_CLASS" inheritance strategy, because child classes have quite a lot of specific fields,
+// so this strategy allows to avoid a lot of "null" records in the data base.
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class UserEntity implements EntityInterface {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     private String name;
